@@ -130,7 +130,6 @@ a {
   margin-top: 10px;
   padding: 10px;
   /* -- */
-  width: calc(100% - 40px);
 }
 #report ul li:before {
   width: 40px;

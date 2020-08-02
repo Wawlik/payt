@@ -1,165 +1,40 @@
 <template>
 	<div class="list">
 		<div id="report">
-			<div class="date">
+			<div class="date" v-for="(one) in trList" :key="'transactions-on-' + (new Date(one[0].updated_at)).toDateString()">
 				<div>
-					<span>Сегодня</span>
+					<span>{{getGroupDate(one[0].updated_at)}}</span>
 				</div>
 				<ul>
-					<li class="transaction">
+					<li class="transaction" v-for="(two) in one" :key="two.event_id">
 						<details>
 							<summary>
 								<div class="order">
-									Заказ:
-									<b>89201</b>
+									{{getType(two.type)}}:
+									<b>{{two.event_id}}</b>
+									<!-- <b>{{two.bill_id}}</b> -->
 								</div>
 								<div class="time">
-									<time datetime="2019-04-18T16:45">16:45</time>
+									<time :datetime="two.updated_at">
+										{{(new Date(one[0].updated_at)).toLocaleTimeString('ru',{minute: '2-digit', hour:'2-digit'})}}
+									</time>
 								</div>
-								<div class="account">4672 **** **** 4892</div>
-								<div class="amount rubles positive">12 380</div>
+								<div class="account">{{getContacts(two)}}</div>
+								<div :class="'amount ' + (getCurrency(two.currency)) + (true ? ' positive ' : ' negative')">{{two.amount}}</div>
 							</summary>
-							<p class="description">Ультрафиолетовый блокнот рокового кролика с зелёными ушами</p>
-						</details>
-					</li>
-
-					<li class="transaction">
-						<details>
-							<summary>
-								<div class="order">
-									Перевод:
-									<b>49023</b>
-								</div>
-								<div class="time">
-									<time datetime="2019-04-18T16:45">14:30</time>
-								</div>
-								<div class="account">6823 **** **** 7382</div>
-								<div class="amount rubles positive">32 560</div>
-							</summary>
-							<p class="description">Ультрафиолетовый блокнот рокового кролика с зелёными ушами</p>
-						</details>
-					</li>
-
-					<li class="transaction">
-						<details>
-							<summary>
-								<div class="order">
-									Заказ:
-									<b>16359</b>
-								</div>
-								<div class="time">
-									<time datetime="2019-04-18T16:45">03:20</time>
-								</div>
-								<div class="account">2782 **** **** 8291</div>
-								<div class="amount rubles positive">990</div>
-							</summary>
-							<p class="description">Ультрафиолетовый блокнот рокового кролика с зелёными ушами</p>
+							<p v-if="two.description" class="description">{{two.description}}</p>
 						</details>
 					</li>
 				</ul>
 			</div>
 
-			<div class="date">
-				<div>
-					<span>Вчера</span>
-				</div>
-				<ul>
-					<li class="transaction">
-						<details>
-							<summary>
-								<div class="order">
-									Вывод:
-									<b>90274</b>
-								</div>
-								<div class="time">
-									<time datetime="2019-04-18T16:45">18:15</time>
-								</div>
-								<div class="account">4412 **** **** 5682</div>
-								<div class="amount rubles negative">116 200</div>
-							</summary>
-							<p class="description">Ультрафиолетовый блокнот рокового кролика с зелёными ушами</p>
-						</details>
-					</li>
-					<li class="transaction">
-						<details>
-							<summary>
-								<div class="order">
-									Заказ:
-									<b>46791</b>
-								</div>
-								<div class="time">
-									<time datetime="2019-04-18T16:45">12:30</time>
-								</div>
-								<div class="account">4289 **** **** 2839</div>
-								<div class="amount rubles positive">8 620</div>
-							</summary>
-							<p class="description">Ультрафиолетовый блокнот рокового кролика с зелёными ушами</p>
-						</details>
-					</li>
-				</ul>
-			</div>
-
-			<div class="date">
-				<div>
-					<span>18.04.19</span>
-				</div>
-				<ul>
-					<li class="transaction">
-						<details>
-							<summary>
-								<div class="order">
-									Счёт:
-									<b>13089</b>
-								</div>
-								<div class="time">
-									<time datetime="2019-04-18T16:45">14:20</time>
-								</div>
-								<div class="account">nikita.s.doroshenko@gmail.com</div>
-								<div class="amount rubles positive">16 000</div>
-							</summary>
-							<p class="description">Ультрафиолетовый блокнот рокового кролика с зелёными ушами</p>
-						</details>
-					</li>
-					<li class="transaction">
-						<details>
-							<summary>
-								<div class="order">
-									Перевод:
-									<b>76982</b>
-								</div>
-								<div class="time">
-									<time datetime="2019-04-18T16:45">08:55</time>
-								</div>
-								<div class="account">4689 **** **** 2102</div>
-								<div class="amount rubles positive">840</div>
-							</summary>
-							<p class="description">Ультрафиолетовый блокнот рокового кролика с зелёными ушами</p>
-						</details>
-					</li>
-					<li class="css-2801">
-						<details>
-							<summary>
-								<div class="order">
-									Заказ:
-									<b>97623</b>
-								</div>
-								<div class="time">
-									<time datetime="2019-04-18T16:45">02:20</time>
-								</div>
-								<div class="account">5672 **** **** 6728</div>
-								<div class="amount rubles positive">6 430</div>
-							</summary>
-							<p class="description">Ультрафиолетовый блокнот рокового кролика с зелёными ушами</p>
-						</details>
-					</li>
-				</ul>
-			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 import axios from "axios";
+import Vue from "vue";
 
 export default {
 	name: "list",
@@ -177,10 +52,8 @@ export default {
 			};
 			axios.get(url, config)
 				.then((res2) => {
-					// console.log({ res2 });
-					this.trList = res2.data?.result ?? null;
+					// console.log('res2.data?.result=', res2.data?.result)
 					this.sortListByDate(res2.data?.result);
-					// console.log('this.trList=', this.trList);
 				})
 				.catch((err1) => {
 					console.error({ err1 });
@@ -188,7 +61,7 @@ export default {
 		},
 		sortListByDate(list){
 			let misc = JSON.parse(JSON.stringify(list)); // copy obj
-			// no date case (undef)
+			// ++no date case (undef)
 			misc.sort((a,b) => {
 				if(new Date(b.updated_at) > new Date(a.updated_at)){
 					return 1;
@@ -197,7 +70,6 @@ export default {
 					return -1;
 				}
 				return 0;
-				// return new Date(b.date) - new Date(a.date);
 			})
 			// console.log({misc});
 			this.splitListByDay(misc);
@@ -208,26 +80,78 @@ export default {
 			let bp = [];
 			for(let one = 0; one < misc.length; one ++){
 				let oDate = misc[one].updated_at;
-				console.log((new Date(oDate)).toDateString());
-				// let nextDate = misc[one+1]?.updated_at;
-				// console.log(new Date(oDate) > new Date(nextDate))
+				// console.log((new Date(oDate)).toDateString());
 				if(pDate){
-					// console.log(pDate});
 					if(pDate !== (new Date(oDate)).toDateString()){
-						bp.push(one + 1);
+						bp.push(one); // set breakpoint
 						pDate = (new Date(oDate)).toDateString();
 					}
 				} else {
 					pDate = (new Date(oDate)).toDateString();
 				}
 			}
-			console.log({bp});
 			// splitting
 			let subList = [];
+			let dec = 0;
 			for(let one = 0; one < bp.length; one++){
-				subList.push(misc.splice(0, bp[one]));
+				subList.push(misc.splice(0, bp[one] - dec));
+				dec += bp[one] - dec;
 			}
-			console.log({subList});
+			subList.push(misc); // push rest
+			Vue.set(this, 'trList', subList);
+		},
+		getGroupDate(date){
+			const today = new Date();
+			const ytd = new Date(today.setDate(today.getDate() - 1));
+			const date2 = new Date(date);
+
+			let dd = String(today.getDate()).padStart(2, '0');
+			let mm = String(today.getMonth() + 1).padStart(2, '0');
+			let yy = today.getFullYear();
+			
+			let ddy = String(ytd.getDate()).padStart(2, '0');
+			let mmy = String(ytd.getMonth() + 1).padStart(2, '0');
+			let yyy = ytd.getFullYear();
+
+			let dd2 = String(date2.getDate()).padStart(2, '0');
+			let mm2 = String(date2.getMonth() + 1).padStart(2, '0');
+			let yy2 = date2.getFullYear();
+			
+			if(dd === dd2 && mm == mm2 && yy === yy2){
+				return 'Сегодня';
+			} else if( ddy === dd2 && mmy == mm2 && yyy === yy2){
+				return 'Вчера';
+			}
+			return date2.toLocaleDateString('ru', {day: '2-digit', month: '2-digit', year: '2-digit'});
+		},
+		getCurrency(cur){
+			return cur === 'RUB' ? ' rubles ' : ' USD ';
+		},
+		getContacts(tr){
+			return tr.account_number ? 
+			( tr.account_number.slice(0,4) + ' **** **** ' + tr.account_number.slice(-4) )
+			: tr.senderProperties?.email || '-';
+		},
+		getType(type){
+			let res = 'Транзакция';
+			switch (type) {
+				case "REFUND":
+					res = 'Возврат'
+					break;
+			
+				case "PURCHASE_BILL":
+					res = 'Счет'
+					break;
+			
+				case "PURCHASE":
+					res = 'Заказ'
+					break;
+			
+				default:
+					res = 'Транзакция'
+					break;
+			}
+			return res;
 		}
 	},
 	async mounted() {
@@ -235,20 +159,3 @@ export default {
 	},
 };
 </script>
-
-<style>
-h3 {
-	margin: 40px 0 0;
-}
-ul {
-	list-style-type: none;
-	padding: 0;
-}
-li {
-	display: inline-block;
-	margin: 0 10px;
-}
-a {
-	color: #42b983;
-}
-</style>
