@@ -1,4 +1,4 @@
-# payt
+# Capusta
 
 ## Project setup
 ```
